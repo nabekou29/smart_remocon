@@ -1,17 +1,37 @@
-import * as React from 'react'
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import React from "react";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import ProTip from "components/ProTip";
+import Link from "components/Link";
 
-const AboutPage: React.FunctionComponent = () => (
-  <Layout title="About | Next.js + TypeScript Example">
-    <h1>About</h1>
-    <p>This is the about page</p>
-    <p>
-      <Link href="/">
-        <a>Go home</a>
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {". Built with "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Material-UI.
       </Link>
-    </p>
-  </Layout>
-)
+    </Typography>
+  );
+}
 
-export default AboutPage
+export default function App() {
+  return (
+    <Container maxWidth="sm">
+      <Box my={4}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Next.js with TypeScript example
+        </Typography>
+        <Link href="/">Go to the main page</Link>
+        <ProTip />
+        <Copyright />
+      </Box>
+    </Container>
+  );
+}
