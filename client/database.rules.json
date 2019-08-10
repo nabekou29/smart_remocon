@@ -1,0 +1,6 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": "auth.provider == 'google' && auth.token.email == 'nabekou0729@gmail.com'"
+  }
+}
