@@ -1,8 +1,8 @@
 {
-  "name": "smart_remocon",
+  "name": "with-typescript",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next ./src",
+    "dev": "next",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc"
