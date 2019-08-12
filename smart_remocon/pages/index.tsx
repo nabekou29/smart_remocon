@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Home">
       <h1>Hello Next.js 👋</h1>
       <p>
         <Link href="/about">
