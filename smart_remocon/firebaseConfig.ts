@@ -1,6 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
 const firebaseConfig = {
   apiKey: process.env.fireBaseApiKey,
   authDomain: 'raspi-home-1823.firebaseapp.com',
@@ -11,8 +8,4 @@ const firebaseConfig = {
   appId: '1:398066115568:web:46c1716c0d169916',
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-export default firebase;
+export default firebaseConfig;
