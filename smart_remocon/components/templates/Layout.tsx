@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import MyAppBar from '../../components/organisms/MyAppBar';
+import { Container } from '@material-ui/core';
 
 type Props = {
   title?: string;
@@ -19,7 +20,7 @@ const Layout: React.FunctionComponent<Props> = ({
     <header>
       <MyAppBar />
     </header>
-    {children}
+    <Container maxWidth="sm">{children}</Container>
   </>
 );
 

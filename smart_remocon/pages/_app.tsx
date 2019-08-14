@@ -18,7 +18,7 @@ class MyApp extends App {
       firebase.initializeApp(firebaseConfig);
     }
 
-    // ログイン状態に応じて画面遷移
+    // ログイン状態の変化に応じて画面遷移
     firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
         Router.push('/');

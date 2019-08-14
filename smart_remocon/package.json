@@ -1,6 +1,7 @@
 {
   "name": "smart_remocon",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -12,6 +13,7 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.3.0",
     "firebase": "^6.3.5",
+    "firestore-simple": "^4.0.0",
     "jss": "^9.8.7",
     "next": "latest",
     "prop-types": "^15.7.2",

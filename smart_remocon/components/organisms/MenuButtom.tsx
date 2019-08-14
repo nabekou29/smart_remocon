@@ -5,9 +5,7 @@ import { Menu } from '@material-ui/icons';
 
 import MenuList from './MyMenuList';
 
-type Props = {};
-
-const MenuButtom: React.FunctionComponent<Props> = () => {
+const MenuButtom: React.FunctionComponent = () => {
   const [open, setOpen] = React.useState(false);
   const menuButtonRef = React.useRef<HTMLButtonElement>(null);
   return (
