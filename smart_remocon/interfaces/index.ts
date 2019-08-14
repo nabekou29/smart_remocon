@@ -1,5 +1,5 @@
 interface Entiry {
-  id: string | undefined;
+  id: string;
 }
 
 export interface Remocon extends Entiry {
@@ -7,7 +7,6 @@ export interface Remocon extends Entiry {
 }
 
 export interface Signal extends Entiry {
-  id: string | undefined;
   name: string;
   remocon_id: string;
 }

@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 
 import { Remocon } from '../interfaces';
+import { remoconDao } from './dao';
 
 const firestore = firebase.firestore();
 
@@ -30,7 +31,7 @@ export const findAllRemocon = (): Promise<Array<Remocon>> => {
     .then((snapshot: firebase.firestore.QuerySnapshot) => {
       const result = new Array<Remocon>();
       snapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
-        doc.data();
+        result.push(remoconDao.encode(doc));
       });
       return result;
     });
