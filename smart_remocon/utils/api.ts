@@ -1,8 +1,13 @@
 import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 import { Remocon } from '../interfaces';
 import { remoconDao } from './dao';
+import firebaseConfig from '../firebaseConfig';
 
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const firestore = firebase.firestore();
 
 /**
