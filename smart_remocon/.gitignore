@@ -1,4 +1,10 @@
 node_modules
+
+# Next
 .next
-.firebase
 out
+
+# Firebase
+.firebase
+firestore.rules
+database.rules.json
