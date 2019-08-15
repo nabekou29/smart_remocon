@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
+import { Container } from '@material-ui/core';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 
 import Layout from '../components/templates/Layout';
@@ -16,7 +17,9 @@ const LoginPage: NextPage = () => {
 
   return (
     <Layout title="ログイン">
-      <GoogleLoginButton onClick={login}></GoogleLoginButton>
+      <Container maxWidth="sm">
+        <GoogleLoginButton onClick={login}></GoogleLoginButton>
+      </Container>
     </Layout>
   );
 };
