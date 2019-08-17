@@ -12,7 +12,7 @@ const Layout: React.FunctionComponent<Props> = ({
 }) => (
   <>
     <Head>
-      <title>{title}</title>
+      <title>{'SmartRemocon | ' + title}</title>
     </Head>
     <header>
       <MyAppBar />
