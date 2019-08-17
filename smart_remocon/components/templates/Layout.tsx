@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Head from 'next/head';
-import MyAppBar from '../../components/organisms/MyAppBar';
+import AppBar from '../organisms/AppBar';
 
 type Props = {
   title?: string;
@@ -15,7 +15,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <title>{'SmartRemocon | ' + title}</title>
     </Head>
     <header>
-      <MyAppBar />
+      <AppBar />
     </header>
     {children}
   </>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IconButton, Drawer } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 
-import MenuList from './MyMenuList';
+import MenuList from './MenuList';
 
 const MenuButtom: React.FunctionComponent = () => {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +19,7 @@ const MenuButtom: React.FunctionComponent = () => {
       >
         <Menu />
       </IconButton>
-      <Drawer open={open} onClose={() => setOpen(false)}>
+      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <MenuList></MenuList>
       </Drawer>
     </>

@@ -7,7 +7,7 @@ import { AccountCircle } from '@material-ui/icons';
 
 import DisplayAuth from '../atoms/DisplayAuth';
 
-const MenuButtom: React.FunctionComponent = () => {
+const MenuList: React.FunctionComponent = () => {
   const logout = () => {
     firebase.auth().signOut();
   };
@@ -28,4 +28,4 @@ const MenuButtom: React.FunctionComponent = () => {
   );
 };
 
-export default MenuButtom;
+export default MenuList;
