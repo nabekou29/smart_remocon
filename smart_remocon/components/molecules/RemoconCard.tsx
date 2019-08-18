@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+import Link from 'next/link';
+
 import {
   Card,
-  // Fab,
   Typography,
   CardContent,
   CardActions,
@@ -18,7 +19,7 @@ interface Props extends CardProps {
   remocon: Remocon;
 }
 
-const RemoconCard: React.FunctionComponent<Props> = ({ remocon, ...props }) => {
+const RemoconCard: React.FC<Props> = ({ remocon, ...props }) => {
   return (
     <Card {...props}>
       <Box height="60%">
@@ -29,10 +30,12 @@ const RemoconCard: React.FunctionComponent<Props> = ({ remocon, ...props }) => {
         </CardContent>
       </Box>
       <CardActions disableSpacing>
-        <IconButton color="primary" size="small">
-          <SettingsRemote />
-          <Box fontSize={16}>USE</Box>
-        </IconButton>
+        <Link href={`/remocon?id=${remocon.id}`}>
+          <IconButton color="primary" size="small">
+            <SettingsRemote />
+            <Box fontSize={16}>USE</Box>
+          </IconButton>
+        </Link>
       </CardActions>
     </Card>
   );

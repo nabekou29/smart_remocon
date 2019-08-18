@@ -2,12 +2,20 @@ import * as React from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import Link from 'next/link';
+
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from '@material-ui/core';
+import { AccountCircle, Home } from '@material-ui/icons';
 
 import DisplayAuth from '../atoms/DisplayAuth';
 
-const MenuList: React.FunctionComponent = () => {
+const MenuList: React.FC = () => {
   const logout = () => {
     firebase.auth().signOut();
   };
@@ -15,8 +23,17 @@ const MenuList: React.FunctionComponent = () => {
   return (
     <>
       <List>
+        <Link href="/">
+          <ListItem button>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText>ホーム</ListItemText>
+          </ListItem>
+        </Link>
         <DisplayAuth login={true}>
-          <ListItem button key={'ログアウト'} onClick={logout}>
+          <Divider />
+          <ListItem button onClick={logout}>
             <ListItemIcon>
               <AccountCircle />
             </ListItemIcon>

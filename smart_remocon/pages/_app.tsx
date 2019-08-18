@@ -17,15 +17,16 @@ class MyApp extends App {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-
+    // TODO: 認証周りの修正が必要。
     // ログイン状態の変化に応じて画面遷移
     firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
-      if (user) {
-        Router.push('/');
-      } else {
+      if (!user) {
         Router.push('/login');
       }
     });
+    if (!firebase.auth().currentUser) {
+      Router.push('/login');
+    }
 
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

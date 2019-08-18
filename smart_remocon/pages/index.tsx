@@ -9,7 +9,6 @@ import {
   Container,
   GridList,
   GridListTile,
-  // ListSubheader,
   Typography,
   Fab,
 } from '@material-ui/core';

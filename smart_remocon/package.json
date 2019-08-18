@@ -6,7 +6,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export",
+    "export": "npm run build && next export",
     "type-check": "tsc"
   },
   "dependencies": {
@@ -19,8 +19,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-jss": "^8.6.1",
-    "react-social-login-buttons": "^3.0.0"
+    "react-jss": "^8.6.1"
   },
   "devDependencies": {
     "@types/node": "^11.13.9",

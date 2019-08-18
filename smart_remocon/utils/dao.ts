@@ -2,13 +2,13 @@ import * as firebase from 'firebase/app';
 import { Signal, Remocon } from '../interfaces';
 
 interface Dao<T> {
-  encode: (doc: firebase.firestore.QueryDocumentSnapshot) => T;
+  encode: (doc: firebase.firestore.DocumentSnapshot) => T;
   decode: (data: T) => {};
 }
 
 class SignalDao implements Dao<Signal> {
-  encode(doc: firebase.firestore.QueryDocumentSnapshot): Signal {
-    const data = doc.data();
+  encode(doc: firebase.firestore.DocumentSnapshot): Signal {
+    const data = doc.data() || {};
     return {
       id: doc.id,
       name: data.name,
@@ -25,8 +25,8 @@ class SignalDao implements Dao<Signal> {
 export const signalDao = new SignalDao();
 
 class RemoconDao implements Dao<Remocon> {
-  encode(doc: firebase.firestore.QueryDocumentSnapshot): Remocon {
-    const data = doc.data();
+  encode(doc: firebase.firestore.DocumentSnapshot): Remocon {
+    const data = doc.data() || {};
     return {
       id: doc.id,
       name: data.name,
