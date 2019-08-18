@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/database';
 
 import { Remocon, Signal } from '../interfaces';
 import { remoconDao, signalDao } from './dao';
@@ -23,7 +24,7 @@ export const sendSignal = (
     .database()
     .ref('send_signal')
     .set({
-      signalId: signalId,
+      signal_id: signalId,
       minutes: minutes,
       timestamp: firebase.database.ServerValue.TIMESTAMP,
     });
