@@ -37,7 +37,7 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
     <Card {...props}>
       <Box p={1} display="flex">
         <Box flexGrow={1}>
-          <Typography variant="h6" color="inherit" noWrap>
+          <Typography variant="h6" noWrap>
             {signal.name}
           </Typography>
         </Box>
@@ -47,7 +47,7 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
         </IconButton>
         <Snackbar
           anchorOrigin={{
-            vertical: 'top',
+            vertical: 'bottom',
             horizontal: 'center',
           }}
           open={open}
