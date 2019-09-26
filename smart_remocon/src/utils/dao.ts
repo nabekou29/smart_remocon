@@ -13,7 +13,7 @@ class SignalDao implements Dao<Signal> {
     return {
       id: doc.id,
       name: data.name,
-      remocon_id: data.remocon_id,
+      remoconId: data.remocon_id,
     };
   }
 

@@ -18,14 +18,14 @@ const firestore = firebase.firestore();
  * @param signalId 信号ID
  * @param minutes 何分後か
  */
-export const sendSignal = (
+export const sendSignal = async (
   signalId: string,
   minutes: number = 0
 ): Promise<any> => {
   if (minutes === 0) {
     throw new Error('1以上を指定してください');
   }
-  return firebase
+  return await firebase
     .database()
     .ref('send_signal')
     .set({
@@ -39,7 +39,7 @@ export const findRemoconAndSignals = async (
   id: string
 ): Promise<{
   remocon: Remocon | null;
-  signals: Array<Signal>;
+  signals: Signal[];
 }> => {
   let remocon = null;
   const signals = new Array<Signal>();
@@ -54,7 +54,7 @@ export const findRemoconAndSignals = async (
   }
 
   if (!remocon) {
-    return { remocon, signals };
+    throw new Error();
   }
   const signalSnapshot = await firestore
     .collection('signal')
@@ -68,7 +68,7 @@ export const findRemoconAndSignals = async (
   return { remocon, signals };
 };
 
-export const findAllRemocon = async (): Promise<Array<Remocon>> => {
+export const findAllRemocon = async (): Promise<Remocon[]> => {
   const snapshot = await firestore.collection('remocon').get();
 
   const result = new Array<Remocon>();

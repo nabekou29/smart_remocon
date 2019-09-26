@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as api from '../utils/api';
 
 import {
   Box,
@@ -16,9 +15,12 @@ import { NextPage, NextPageContext } from 'next';
 import { Remocon, Signal } from '../interfaces/entities';
 
 import { Add } from '@material-ui/icons';
-import Error from 'next/error';
+import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
 import SignalCard from '../components/presentational/molecules/SignalCard';
+import { Store } from 'redux';
+import { initialize } from '../actions/remocon';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,17 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Prop {
-  remocon: Remocon | null;
-  signals: Array<Signal>;
-}
-
-const RemoconPage: NextPage<Prop> = ({ remocon, signals }) => {
+const RemoconPage: NextPage = () => {
   const classes = useStyles({});
-
-  if (!remocon) {
-    return <Error statusCode={404} />;
-  }
+  const state = useSelector((state: AppState) => state.remocon);
   return (
     <Layout title="Remocon">
       <Container maxWidth="sm">
@@ -59,15 +53,16 @@ const RemoconPage: NextPage<Prop> = ({ remocon, signals }) => {
                 className={classes.listTitle}
                 component="span"
                 variant="h6"
+                gutterBottom
               >
-                {remocon.name}
+                {state.remocon ? state.remocon.name : ''}
               </Typography>
               <Fab className={classes.addButton} color="primary" size="small">
                 <Add />
               </Fab>
             </Box>
           </GridListTile>
-          {signals.map(s => (
+          {state.signals.map(s => (
             <GridListTile key={s.id}>
               <SignalCard signal={s} />
             </GridListTile>
@@ -78,12 +73,14 @@ const RemoconPage: NextPage<Prop> = ({ remocon, signals }) => {
   );
 };
 
-RemoconPage.getInitialProps = async ({ query }: NextPageContext) => {
-  if (typeof query.id !== 'string') {
-    return { remocon: null, signals: new Array<Signal>() };
+RemoconPage.getInitialProps = async (
+  ctx: NextPageContext & { store: Store }
+) => {
+  if (typeof ctx.query.id !== 'string') {
+    throw new Error();
   }
-
-  return await api.findRemoconAndSignals(query.id);
+  ctx.store.dispatch(initialize.start({ remoconId: ctx.query.id }));
+  return {};
 };
 
 export default RemoconPage;

@@ -1,53 +1,59 @@
+import { Remocon, Signal } from '../interfaces/entities';
 import {
-  SampleAction,
-  sampleActionTypes as actionTypes,
-} from '../actions/sample';
+  RemoconAction,
+  RemoconActionTypes as actionTypes,
+} from '../actions/remocon';
 
 import { AxiosError } from 'axios';
-import { Sample } from '../interfaces/entities';
 
 /** State */
-export interface SampleState {
-  samples: Sample[];
+export interface RemoconState {
+  remocon: Remocon | null;
+  signals: Signal[];
   isLoading: boolean;
-  error?: AxiosError;
+  error: AxiosError | null;
 }
 
 /** 初期値 */
-export const initialState: SampleState = {
-  samples: [],
+export const initialState: RemoconState = {
+  remocon: null,
+  signals: [],
   isLoading: false,
+  error: null,
 };
 
-/** サンプル Reducer */
-export function sampleReducer(state = initialState, action: SampleAction) {
+/** Reducer */
+export const remoconReducer = (
+  state = initialState,
+  action: RemoconAction
+): RemoconState => {
   switch (action.type) {
     // succeed
     case actionTypes.INITIALIZE_SUCCEED: {
       return {
         ...state,
-        samples: [...action.payload.result.samples],
+        remocon: action.payload.result.remocon,
+        signals: action.payload.result.signals,
         isLoading: false,
       };
     }
-    case actionTypes.REGISTER_SUCCEED: {
+    case actionTypes.SEND_SIGNAL_SUCCEED: {
       return {
         ...state,
-        samples: [...state.samples, action.payload.result.sample],
         isLoading: false,
       };
     }
     // default start
     case actionTypes.INITIALIZE_START:
-    case actionTypes.REGISTER_START: {
+    case actionTypes.SEND_SIGNAL_START: {
       return {
         ...state,
         isLoading: true,
       };
     }
     // default fail
-    case actionTypes.INITIALIZE_FAIL:
-    case actionTypes.REGISTER_FAIL: {
+    case actionTypes.SEND_SIGNAL_FAIL:
+    case actionTypes.INITIALIZE_FAIL: {
       return {
         ...state,
         isLoading: false,
@@ -60,4 +66,4 @@ export function sampleReducer(state = initialState, action: SampleAction) {
       return state;
     }
   }
-}
+};

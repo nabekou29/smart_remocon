@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as api from '../utils/api';
+import * as api from '../api';
 
 import {
   Box,
@@ -15,9 +15,13 @@ import {
 import { NextPage, NextPageContext } from 'next';
 
 import { Add } from '@material-ui/icons';
+import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
 import { Remocon } from '../interfaces/entities';
 import RemoconCard from '../components/presentational/molecules/RemoconCard';
+import { Store } from 'redux';
+import { initialize } from '../actions/top';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,12 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Prop {
-  remocons: Array<Remocon>;
-}
-
-const IndexPage: NextPage<Prop> = ({ remocons }) => {
+const IndexPage: NextPage<{}> = () => {
   const classes = useStyles({});
+  const state = useSelector((app: AppState) => app.top);
   return (
     <Layout title="Home">
       <div>
@@ -66,7 +67,7 @@ const IndexPage: NextPage<Prop> = ({ remocons }) => {
                 </Fab>
               </Box>
             </GridListTile>
-            {remocons.map(r => (
+            {state.remocons.map(r => (
               <GridListTile key={r.id}>
                 <RemoconCard remocon={r} className={classes.card}></RemoconCard>
               </GridListTile>
@@ -78,11 +79,9 @@ const IndexPage: NextPage<Prop> = ({ remocons }) => {
   );
 };
 
-IndexPage.getInitialProps = async (_: NextPageContext) => {
-  const remocons: Array<Remocon> = await api.findAllRemocon();
-  return {
-    remocons,
-  };
+IndexPage.getInitialProps = async (ctx: NextPageContext & { store: Store }) => {
+  ctx.store.dispatch(initialize.start());
+  return {};
 };
 
 export default IndexPage;

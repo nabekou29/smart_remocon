@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as api from '../../../utils/api';
 
 import {
   Box,
@@ -14,6 +13,8 @@ import { Close, Done, SettingsRemote } from '@material-ui/icons';
 import { CardProps } from '@material-ui/core/Card';
 import { Signal } from '../../../interfaces/entities';
 import { green } from '@material-ui/core/colors';
+import { sendSignal } from '../../../actions/remocon';
+import { useDispatch } from 'react-redux';
 
 // import Link from 'next/link';
 
@@ -23,15 +24,12 @@ interface Props extends CardProps {
 
 const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
-  const sendSignal = async () => {
+  const onSendSignal = () => {
     setOpen(false);
-    try {
-      await api.sendSignal(signal.id);
-    } catch (e) {
-      console.log('error');
-    }
-    setOpen(true);
+    dispatch(sendSignal.start({ signalId: signal.id }));
+    setTimeout(() => setOpen(true), 200);
   };
 
   const closeMessage = () => {
@@ -46,7 +44,7 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
             {signal.name}
           </Typography>
         </Box>
-        <IconButton color="primary" size="small" onClick={sendSignal}>
+        <IconButton color="primary" size="small" onClick={onSendSignal}>
           <SettingsRemote />
           <Box fontSize={16}>SEND</Box>
         </IconButton>

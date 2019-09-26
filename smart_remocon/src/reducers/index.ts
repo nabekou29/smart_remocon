@@ -1,16 +1,19 @@
 import { FormStateMap, reducer as reduxFormReducer } from 'redux-form';
 import { Reducer, combineReducers } from 'redux';
-import { SampleState, sampleReducer } from './sample';
+import { RemoconState, remoconReducer } from './remocon';
+import { TopState, topReducer } from './top';
 
 export type AppState = {
-  sample: SampleState;
   form: FormStateMap;
+  top: TopState;
+  remocon: RemoconState;
 };
 
 /** 全てのリデューサを集約したリデューサ */
 const reducer: Reducer<AppState> = combineReducers<AppState>({
-  sample: sampleReducer,
   form: reduxFormReducer,
+  top: topReducer,
+  remocon: remoconReducer,
 });
 
 export default reducer;

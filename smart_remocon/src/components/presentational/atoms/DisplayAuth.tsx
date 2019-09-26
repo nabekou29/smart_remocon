@@ -9,9 +9,8 @@ type Props = {
 
 const DisplayAuth: React.FC<Props> = ({ children, login }) => {
   const user = firebase.auth().currentUser;
-  const logind = user !== null;
 
-  return logind === login ? <>{children}</> : <></>;
+  return (user !== null) === login ? <>{children}</> : <></>;
 };
 
 export default DisplayAuth;

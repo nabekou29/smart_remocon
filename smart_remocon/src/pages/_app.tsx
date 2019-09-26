@@ -1,10 +1,7 @@
-import '../api/mock';
-
 import * as React from 'react';
 
 import App from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { ThemeProvider } from '@material-ui/styles';
