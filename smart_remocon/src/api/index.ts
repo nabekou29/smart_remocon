@@ -22,26 +22,40 @@ export const sendSignal = async (
   signalId: string,
   minutes: number = 0
 ): Promise<any> => {
-  if (minutes === 0) {
-    throw new Error('1以上を指定してください');
-  }
+  const data = {
+    signal_id: signalId,
+    minutes,
+    timestamp: firebase.database.ServerValue.TIMESTAMP,
+  };
   return await firebase
     .database()
     .ref('send_signal')
-    .set({
-      signal_id: signalId,
-      minutes: minutes,
-      timestamp: firebase.database.ServerValue.TIMESTAMP,
-    });
+    .set(data);
 };
 
+/** リモコンの作成 */
+export const createRemocon = async (name: string): Promise<Remocon> => {
+  const data = {
+    name,
+  };
+  const doc = await firebase
+    .firestore()
+    .collection('remocon')
+    .add(data);
+  return {
+    ...data,
+    id: doc.id,
+  };
+};
+
+/** リモコンと信号の一覧を取得する */
 export const findRemoconAndSignals = async (
   id: string
 ): Promise<{
   remocon: Remocon | null;
   signals: Signal[];
 }> => {
-  let remocon = null;
+  let remocon: Remocon | null = null;
   const signals = new Array<Signal>();
 
   const remoconDoc = await firestore
@@ -68,6 +82,7 @@ export const findRemoconAndSignals = async (
   return { remocon, signals };
 };
 
+/** リモコンの一覧を取得する */
 export const findAllRemocon = async (): Promise<Remocon[]> => {
   const snapshot = await firestore.collection('remocon').get();
 

@@ -1,7 +1,7 @@
-import { Middleware, applyMiddleware, createStore } from 'redux';
+import { Middleware, Store, applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware, { Task } from 'redux-saga';
+import reducer, { AppState } from './reducers';
 
-import createSagaMiddleware from 'redux-saga';
-import reducer from './reducers';
 import rootSaga from './middleware/saga';
 
 // reduxのmiddlewareの設定
@@ -14,7 +14,7 @@ const bindMiddleware = (...middleware: Middleware[]) => {
   return applyMiddleware(...middleware);
 };
 
-function configureStore(initialState) {
+const configureStore = (initialState: AppState): Store & { sagaTask: Task } => {
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore(
     reducer,
@@ -23,6 +23,6 @@ function configureStore(initialState) {
   );
 
   return { ...store, sagaTask: sagaMiddleware.run(rootSaga) };
-}
+};
 
 export default configureStore;

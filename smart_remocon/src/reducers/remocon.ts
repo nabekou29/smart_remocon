@@ -33,7 +33,7 @@ export const remoconReducer = (
       return {
         ...state,
         remocon: action.payload.result.remocon,
-        signals: action.payload.result.signals,
+        signals: [...action.payload.result.signals],
         isLoading: false,
       };
     }

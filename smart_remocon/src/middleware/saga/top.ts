@@ -1,7 +1,7 @@
 import * as api from '../../api';
 
 import { TopActionTypes, initialize } from '../../actions/top';
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 /** 初期化 */
 function* runInitialization() {

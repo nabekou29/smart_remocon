@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as api from '../api';
 
 import {
   Box,
@@ -17,7 +16,6 @@ import { NextPage, NextPageContext } from 'next';
 import { Add } from '@material-ui/icons';
 import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
-import { Remocon } from '../interfaces/entities';
 import RemoconCard from '../components/presentational/molecules/RemoconCard';
 import { Store } from 'redux';
 import { initialize } from '../actions/top';

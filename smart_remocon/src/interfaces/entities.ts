@@ -1,5 +1,3 @@
-import { Dayjs } from 'dayjs';
-
 interface Entity {
   id: string;
 }

@@ -12,7 +12,6 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { NextPage, NextPageContext } from 'next';
-import { Remocon, Signal } from '../interfaces/entities';
 
 import { Add } from '@material-ui/icons';
 import { AppState } from '../reducers';
@@ -77,7 +76,8 @@ RemoconPage.getInitialProps = async (
   ctx: NextPageContext & { store: Store }
 ) => {
   if (typeof ctx.query.id !== 'string') {
-    throw new Error();
+    ctx.res!.writeHead(404);
+    return {};
   }
   ctx.store.dispatch(initialize.start({ remoconId: ctx.query.id }));
   return {};
