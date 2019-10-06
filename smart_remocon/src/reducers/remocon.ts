@@ -11,6 +11,7 @@ export interface RemoconState {
   remocon: Remocon | null;
   signals: Signal[];
   isLoading: boolean;
+  isWaitingSignal: boolean;
   error: AxiosError | null;
 }
 
@@ -19,6 +20,7 @@ export const initialState: RemoconState = {
   remocon: null,
   signals: [],
   isLoading: false,
+  isWaitingSignal: false,
   error: null,
 };
 

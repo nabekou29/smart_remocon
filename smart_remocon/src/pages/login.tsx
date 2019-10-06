@@ -25,16 +25,13 @@ const LoginPage: NextPage = () => {
 const Login: React.FC = () => {
   React.useEffect(() => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    if (!firebase.auth().currentUser) {
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(() => {
-          Router.push('/');
-        });
-    } else {
-      Router.back();
-    }
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        firebase.auth().signInWithRedirect(provider);
+      } else {
+        Router.push('/');
+      }
+    });
   }, []);
 
   return <>...ログイン中</>;

@@ -1,8 +1,12 @@
+import 'firebase/auth';
+
 import * as React from 'react';
+import * as firebase from 'firebase/app';
 
 import App from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
+import Router from 'next/router';
 import { Store } from 'redux';
 import { ThemeProvider } from '@material-ui/styles';
 import configureStore from '../store';
@@ -12,6 +16,14 @@ import withReduxSaga from 'next-redux-saga';
 
 class MyApp extends App<{ store: Store }> {
   componentDidMount() {
+    if (!firebase.auth().currentUser) {
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+          Router.push('/login');
+        }
+      });
+    }
+
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode) {

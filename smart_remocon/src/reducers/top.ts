@@ -7,6 +7,7 @@ import { Remocon } from '../interfaces/entities';
 export interface TopState {
   remocons: Remocon[];
   isLoading: boolean;
+  isOpenAddDialog: boolean;
   error?: AxiosError;
 }
 
@@ -14,6 +15,7 @@ export interface TopState {
 export const initialState: TopState = {
   remocons: [],
   isLoading: false,
+  isOpenAddDialog: false,
 };
 
 /** サンプル Reducer */
@@ -22,6 +24,18 @@ export const topReducer = (
   action: TopAction
 ): TopState => {
   switch (action.type) {
+    case actionTypes.OPEN_ADD_DIALOG: {
+      return {
+        ...state,
+        isOpenAddDialog: true,
+      };
+    }
+    case actionTypes.CLOSE_ADD_DIALOG: {
+      return {
+        ...state,
+        isOpenAddDialog: false,
+      };
+    }
     // succeed
     case actionTypes.INITIALIZE_SUCCEED: {
       return {
@@ -30,15 +44,24 @@ export const topReducer = (
         isLoading: false,
       };
     }
+    case actionTypes.REGISTER_SUCCEED: {
+      return {
+        ...state,
+        remocons: [...state.remocons, action.payload.result.remocon],
+        isLoading: false,
+      };
+    }
     // default start
-    case actionTypes.INITIALIZE_START: {
+    case actionTypes.INITIALIZE_START:
+    case actionTypes.REGISTER_START: {
       return {
         ...state,
         isLoading: true,
       };
     }
     // default fail
-    case actionTypes.INITIALIZE_FAIL: {
+    case actionTypes.INITIALIZE_FAIL:
+    case actionTypes.REGISTER_FAIL: {
       return {
         ...state,
         isLoading: false,

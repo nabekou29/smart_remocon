@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -28,14 +29,16 @@ const RemoconCard: React.FC<Props> = ({ remocon, ...props }) => {
           </Typography>
         </CardContent>
       </Box>
-      <CardActions disableSpacing>
-        <Link href={`/remocon?id=${remocon.id}`}>
-          <IconButton color="primary" size="small">
-            <SettingsRemote />
-            <Box fontSize={16}>USE</Box>
-          </IconButton>
-        </Link>
-      </CardActions>
+      <Box component="div" display="flex" justifyContent="flex-end">
+        <CardActions disableSpacing>
+          <Link href={`/remocon?id=${remocon.id}`}>
+            <Button variant="outlined" color="primary" size="small">
+              <SettingsRemote />
+              USE
+            </Button>
+          </Link>
+        </CardActions>
+      </Box>
     </Card>
   );
 };

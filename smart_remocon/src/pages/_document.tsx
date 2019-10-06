@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, {
+  DocumentContext,
+  Head,
+  Main,
+  NextScript,
+} from 'next/document';
 
 import { ServerStyleSheets } from '@material-ui/styles';
 import theme from '../theme';
@@ -32,7 +37,7 @@ class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async ctx => {
+MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // Resolution order
   //
   // On the server:

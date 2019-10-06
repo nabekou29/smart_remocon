@@ -3,10 +3,25 @@ import { Remocon } from '../interfaces/entities';
 
 /** Actionの種類 */
 export enum TopActionTypes {
+  OPEN_ADD_DIALOG = 'TOP/OPEN_ADD_DIALOG',
+  CLOSE_ADD_DIALOG = 'TOP/CLOSE_ADD_DIALOG',
   INITIALIZE_START = 'TOP/INITIALIZE_START',
   INITIALIZE_SUCCEED = 'TOP/INITIALIZE_SUCCEED',
   INITIALIZE_FAIL = 'TOP/INITIALIZE_FAIL',
+  REGISTER_START = 'TOP/REGISTER_START',
+  REGISTER_SUCCEED = 'TOP/REGISTER_SUCCEED',
+  REGISTER_FAIL = 'TOP/REGISTER_FAIL',
 }
+
+/** 追加ダイアログを開く */
+export const openAddDialog = () => ({
+  type: TopActionTypes.OPEN_ADD_DIALOG as typeof TopActionTypes.OPEN_ADD_DIALOG,
+});
+
+/** 追加ダイアログを閉じる */
+export const closeAddDialog = () => ({
+  type: TopActionTypes.CLOSE_ADD_DIALOG as typeof TopActionTypes.CLOSE_ADD_DIALOG,
+});
 
 /** 初期化のResult */
 interface InitializeResult {
@@ -28,8 +43,39 @@ export const initialize = {
   }),
 };
 
+/** 登録のPrams */
+interface RegisterParams {
+  name: string;
+}
+
+/** 登録のResult */
+interface RegisterResult {
+  remocon: Remocon;
+}
+
+/** 登録 */
+export const register = {
+  start: (params: RegisterParams) => ({
+    type: TopActionTypes.REGISTER_START as typeof TopActionTypes.REGISTER_START,
+    payload: params,
+  }),
+  succeed: (params: RegisterParams, result: RegisterResult) => ({
+    type: TopActionTypes.REGISTER_SUCCEED as typeof TopActionTypes.REGISTER_SUCCEED,
+    payload: { params, result },
+  }),
+  fail: (params: RegisterParams, error: AxiosError) => ({
+    type: TopActionTypes.REGISTER_FAIL as typeof TopActionTypes.REGISTER_FAIL,
+    payload: { params, error },
+  }),
+};
+
 /** アクション一覧 */
 export type TopAction =
+  | ReturnType<typeof openAddDialog>
+  | ReturnType<typeof closeAddDialog>
   | ReturnType<typeof initialize.start>
   | ReturnType<typeof initialize.succeed>
-  | ReturnType<typeof initialize.fail>;
+  | ReturnType<typeof initialize.fail>
+  | ReturnType<typeof register.start>
+  | ReturnType<typeof register.succeed>
+  | ReturnType<typeof register.fail>;

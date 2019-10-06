@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const RemoconPage: NextPage = () => {
-  const classes = useStyles({});
+  const classes = useStyles();
   const state = useSelector((state: AppState) => state.remocon);
   return (
     <Layout title="Remocon">

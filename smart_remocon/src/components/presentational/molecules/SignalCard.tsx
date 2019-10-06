@@ -2,13 +2,15 @@ import * as React from 'react';
 
 import {
   Box,
+  Button,
+  ButtonGroup,
   Card,
   IconButton,
   Snackbar,
   SnackbarContent,
   Typography,
 } from '@material-ui/core';
-import { Close, Done, SettingsRemote } from '@material-ui/icons';
+import { Close, Done, SettingsRemote, Timer } from '@material-ui/icons';
 
 import { CardProps } from '@material-ui/core/Card';
 import { Signal } from '../../../interfaces/entities';
@@ -44,10 +46,26 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
             {signal.name}
           </Typography>
         </Box>
-        <IconButton color="primary" size="small" onClick={onSendSignal}>
-          <SettingsRemote />
-          <Box fontSize={16}>SEND</Box>
-        </IconButton>
+        <ButtonGroup size="small">
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={onSendSignal}
+          >
+            <SettingsRemote />
+            SEND
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={onSendSignal}
+          >
+            <Timer />
+            TIMER
+          </Button>
+        </ButtonGroup>
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',

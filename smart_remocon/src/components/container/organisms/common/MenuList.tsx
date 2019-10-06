@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as firebase from 'firebase/app';
 
 import { AccountCircle, Home } from '@material-ui/icons';
 import {
@@ -10,9 +11,14 @@ import {
 } from '@material-ui/core';
 
 import Link from 'next/link';
+import Router from 'next/router';
 
 /** サイドメニュー */
 const MenuList: React.FC = () => {
+  const onLogout = async () => {
+    await firebase.auth().signOut();
+    Router.push('/login');
+  };
   return (
     <>
       <List>
@@ -25,7 +31,7 @@ const MenuList: React.FC = () => {
           </ListItem>
         </Link>
         <Divider />
-        <ListItem button>
+        <ListItem button onClick={onLogout}>
           <ListItemIcon>
             <AccountCircle />
           </ListItemIcon>

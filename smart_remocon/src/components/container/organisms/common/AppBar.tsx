@@ -8,20 +8,18 @@ import MenuButton from './MenuButton';
 /** AppBar */
 const MyAppBar: React.FC = () => {
   return (
-    <Box flexGrow={1}>
-      <AppBar position="relative">
-        <Toolbar>
-          <Box flexGrow={1}>
-            <Link href="/">
-              <Typography variant="h6" color="inherit" noWrap>
-                すまりも！
-              </Typography>
-            </Link>
-          </Box>
-          <MenuButton />
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar position="relative">
+      <Toolbar>
+        <Box flexGrow={1}>
+          <Link href="/">
+            <Typography variant="h6" color="inherit" noWrap>
+              すまりも！
+            </Typography>
+          </Link>
+        </Box>
+        <MenuButton />
+      </Toolbar>
+    </AppBar>
   );
 };
 

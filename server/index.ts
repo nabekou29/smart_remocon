@@ -1,5 +1,9 @@
+import 'firebase/database';
+import 'firebase/firestore';
+
+import * as firebase from 'firebase/app';
+
 import { execSync } from 'child_process';
-import firebase from 'firebase';
 import fs from 'fs';
 
 const CWD = process.cwd();

@@ -16,6 +16,7 @@ const InputField: React.FC<WrappedFieldProps & TextFieldProps> = ({
       error={displayError}
       helperText={displayError ? error : ' '}
       {...input}
+      fullWidth
       {...props}
     />
   );

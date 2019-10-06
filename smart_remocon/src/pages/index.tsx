@@ -12,14 +12,15 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { NextPage, NextPageContext } from 'next';
+import { initialize, openAddDialog } from '../actions/top';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Add } from '@material-ui/icons';
+import AddDialog from '../components/container/organisms/top/AddDialog';
 import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
 import RemoconCard from '../components/presentational/molecules/RemoconCard';
 import { Store } from 'redux';
-import { initialize } from '../actions/top';
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,8 +41,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const IndexPage: NextPage<{}> = () => {
-  const classes = useStyles({});
+  const classes = useStyles();
   const state = useSelector((app: AppState) => app.top);
+  const dispatch = useDispatch();
+
+  const onClickAddButton = () => {
+    dispatch(openAddDialog());
+  };
+
   return (
     <Layout title="Home">
       <div>
@@ -60,9 +67,15 @@ const IndexPage: NextPage<{}> = () => {
                 >
                   リモコン一覧
                 </Typography>
-                <Fab className={classes.addButton} color="primary" size="small">
+                <Fab
+                  className={classes.addButton}
+                  color="primary"
+                  size="small"
+                  onClick={onClickAddButton}
+                >
                   <Add />
                 </Fab>
+                <AddDialog></AddDialog>
               </Box>
             </GridListTile>
             {state.remocons.map(r => (
