@@ -48,6 +48,15 @@ export const createRemocon = async (name: string): Promise<Remocon> => {
   };
 };
 
+/** リモコンの削除 */
+export const deleteRemocon = async (id: string): Promise<void> => {
+  await firebase
+    .firestore()
+    .collection('remocon')
+    .doc(id)
+    .delete();
+};
+
 /** リモコンと信号の一覧を取得する */
 export const findRemoconAndSignals = async (
   id: string

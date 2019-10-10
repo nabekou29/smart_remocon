@@ -19,7 +19,7 @@ import { Add } from '@material-ui/icons';
 import AddDialog from '../components/container/organisms/top/AddDialog';
 import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
-import RemoconCard from '../components/presentational/molecules/RemoconCard';
+import RemoconCard from '../components/container/organisms/remocon/RemoconCard';
 import { Store } from 'redux';
 
 const useStyles = makeStyles((theme: Theme) =>

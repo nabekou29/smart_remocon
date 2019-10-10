@@ -36,7 +36,7 @@ export const topReducer = (
         isOpenAddDialog: false,
       };
     }
-    // succeed
+
     case actionTypes.INITIALIZE_SUCCEED: {
       return {
         ...state,
@@ -51,17 +51,27 @@ export const topReducer = (
         isLoading: false,
       };
     }
-    // default start
+    case actionTypes.DISCARD_SUCCEED: {
+      return {
+        ...state,
+        remocons: [
+          ...state.remocons.filter(r => r.id != action.payload.params.id),
+        ],
+        isLoading: false,
+      };
+    }
+
     case actionTypes.INITIALIZE_START:
-    case actionTypes.REGISTER_START: {
+    case actionTypes.REGISTER_START:
+    case actionTypes.DISCARD_START: {
       return {
         ...state,
         isLoading: true,
       };
     }
-    // default fail
     case actionTypes.INITIALIZE_FAIL:
-    case actionTypes.REGISTER_FAIL: {
+    case actionTypes.REGISTER_FAIL:
+    case actionTypes.DISCARD_FAIL: {
       return {
         ...state,
         isLoading: false,

@@ -30,7 +30,18 @@ export const remoconReducer = (
   action: RemoconAction
 ): RemoconState => {
   switch (action.type) {
-    // succeed
+    case actionTypes.INITIALIZE_START: {
+      return {
+        ...initialState,
+        isLoading: true,
+      };
+    }
+    case actionTypes.SEND_SIGNAL_START: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
     case actionTypes.INITIALIZE_SUCCEED: {
       return {
         ...state,
@@ -45,15 +56,6 @@ export const remoconReducer = (
         isLoading: false,
       };
     }
-    // default start
-    case actionTypes.INITIALIZE_START:
-    case actionTypes.SEND_SIGNAL_START: {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-    // default fail
     case actionTypes.SEND_SIGNAL_FAIL:
     case actionTypes.INITIALIZE_FAIL: {
       return {

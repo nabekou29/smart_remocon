@@ -11,6 +11,9 @@ export enum TopActionTypes {
   REGISTER_START = 'TOP/REGISTER_START',
   REGISTER_SUCCEED = 'TOP/REGISTER_SUCCEED',
   REGISTER_FAIL = 'TOP/REGISTER_FAIL',
+  DISCARD_START = 'TOP/DISCARD_START',
+  DISCARD_SUCCEED = 'TOP/DISCARD_SUCCEED',
+  DISCARD_FAIL = 'TOP/DISCARD_FAIL',
 }
 
 /** 追加ダイアログを開く */
@@ -69,6 +72,27 @@ export const register = {
   }),
 };
 
+/** 削除のPrams */
+interface DiscardParams {
+  id: string;
+}
+
+/** 削除 */
+export const discard = {
+  start: (params: DiscardParams) => ({
+    type: TopActionTypes.DISCARD_START as typeof TopActionTypes.DISCARD_START,
+    payload: params,
+  }),
+  succeed: (params: DiscardParams) => ({
+    type: TopActionTypes.DISCARD_SUCCEED as typeof TopActionTypes.DISCARD_SUCCEED,
+    payload: { params },
+  }),
+  fail: (params: DiscardParams, error: AxiosError) => ({
+    type: TopActionTypes.DISCARD_FAIL as typeof TopActionTypes.DISCARD_FAIL,
+    payload: { params, error },
+  }),
+};
+
 /** アクション一覧 */
 export type TopAction =
   | ReturnType<typeof openAddDialog>
@@ -78,4 +102,7 @@ export type TopAction =
   | ReturnType<typeof initialize.fail>
   | ReturnType<typeof register.start>
   | ReturnType<typeof register.succeed>
-  | ReturnType<typeof register.fail>;
+  | ReturnType<typeof register.fail>
+  | ReturnType<typeof discard.start>
+  | ReturnType<typeof discard.succeed>
+  | ReturnType<typeof discard.fail>;
