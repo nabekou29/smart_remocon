@@ -1,6 +1,11 @@
 import * as api from '../../api';
 
-import { TopActionTypes, initialize, register } from '../../actions/top';
+import {
+  TopActionTypes,
+  discard,
+  initialize,
+  register,
+} from '../../actions/top';
 import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { Remocon } from '../../interfaces/entities';
@@ -27,9 +32,20 @@ function* runRegistration(action: ReturnType<typeof register.start>) {
   }
 }
 
+/** 削除 */
+function* runDeleting(action: ReturnType<typeof discard.start>) {
+  try {
+    yield call(() => api.deleteRemocon(action.payload.id));
+    yield put(discard.succeed(action.payload));
+  } catch (error) {
+    yield put(discard.fail(action.payload, error));
+  }
+}
+
 export default function* topSaga() {
   yield all([
     takeLatest(TopActionTypes.INITIALIZE_START, runInitialization),
     takeEvery(TopActionTypes.REGISTER_START, runRegistration),
+    takeEvery(TopActionTypes.DISCARD_START, runDeleting),
   ]);
 }
