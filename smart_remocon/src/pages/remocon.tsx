@@ -27,7 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 'auto !important',
     },
     addButton: {
-      margin: theme.spacing(2),
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
     },
     listTitle: {
       margin: theme.spacing(2),
@@ -45,6 +47,9 @@ const RemoconPage: NextPage = () => {
   return (
     <Layout title="Remocon" loading={state.isLoading}>
       <Container maxWidth="sm">
+        <Fab className={classes.addButton} color="primary">
+          <Add />
+        </Fab>
         <GridList cellHeight={140} spacing={8} cols={1}>
           <GridListTile className={classes.listTitleTile} key="SubHeader">
             <Box display="flex" justifyContent="space-between">
@@ -56,9 +61,6 @@ const RemoconPage: NextPage = () => {
               >
                 {state.remocon ? state.remocon.name : ''}
               </Typography>
-              <Fab className={classes.addButton} color="primary" size="small">
-                <Add />
-              </Fab>
             </Box>
           </GridListTile>
           {state.signals.map(s => (

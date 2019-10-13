@@ -28,7 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 'auto !important',
     },
     addButton: {
-      margin: theme.spacing(2),
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
     },
     listTitle: {
       margin: theme.spacing(2),
@@ -53,6 +55,13 @@ const IndexPage: NextPage<{}> = () => {
     <Layout title="Home" loading={state.isLoading}>
       <div>
         <Container maxWidth="sm">
+          <Fab
+            className={classes.addButton}
+            color="primary"
+            onClick={onClickAddButton}
+          >
+            <Add />
+          </Fab>
           <GridList cellHeight={140} spacing={8}>
             <GridListTile
               className={classes.listTitleTile}
@@ -67,14 +76,6 @@ const IndexPage: NextPage<{}> = () => {
                 >
                   リモコン一覧
                 </Typography>
-                <Fab
-                  className={classes.addButton}
-                  color="primary"
-                  size="small"
-                  onClick={onClickAddButton}
-                >
-                  <Add />
-                </Fab>
                 <AddDialog></AddDialog>
               </Box>
             </GridListTile>
