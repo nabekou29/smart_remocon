@@ -8,7 +8,7 @@ import MenuButton from './MenuButton';
 /** AppBar */
 const MyAppBar: React.FC = () => {
   return (
-    <AppBar position="relative">
+    <AppBar>
       <Toolbar>
         <Box flexGrow={1}>
           <Link href="/">

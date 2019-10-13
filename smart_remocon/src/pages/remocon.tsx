@@ -29,9 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 'auto !important',
     },
     addButton: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: theme.spacing(2),
       right: theme.spacing(2),
+      zIndex: theme.zIndex.appBar,
     },
     listTitle: {
       margin: theme.spacing(2),
