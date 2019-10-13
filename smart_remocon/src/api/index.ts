@@ -106,6 +106,37 @@ export const findAllRemocon = async (): Promise<Remocon[]> => {
   return result;
 };
 
+/** 信号の作成 */
+export const createSignal = async (
+  remoconId: string,
+  name: string,
+  code: number[]
+): Promise<Signal> => {
+  const data = {
+    remocon_id: remoconId,
+    name,
+    code,
+  };
+  const doc = await firebase
+    .firestore()
+    .collection('signal')
+    .add(data);
+  return {
+    id: doc.id,
+    remoconId,
+    name,
+  };
+};
+
+/** 信号の削除 */
+export const deleteSignal = async (id: string): Promise<void> => {
+  await firebase
+    .firestore()
+    .collection('signal')
+    .doc(id)
+    .delete();
+};
+
 /** 信号を受け取ります */
 export const receiveSignal = async (
   timeout: number = 1000
