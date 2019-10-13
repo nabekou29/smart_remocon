@@ -36,6 +36,7 @@ export const sendSignal = async (
 export const createRemocon = async (name: string): Promise<Remocon> => {
   const data = {
     name,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   };
   const doc = await firebase
     .firestore()
@@ -93,6 +94,7 @@ export const findRemoconAndSignals = async (
     .firestore()
     .collection('signal')
     .where('remocon_id', '==', id)
+    .orderBy('timestamp')
     .get();
 
   signalSnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
@@ -107,6 +109,7 @@ export const findAllRemocon = async (): Promise<Remocon[]> => {
   const snapshot = await firebase
     .firestore()
     .collection('remocon')
+    .orderBy('timestamp')
     .get();
 
   const result = new Array<Remocon>();
@@ -126,6 +129,7 @@ export const createSignal = async (
     remocon_id: remoconId,
     name,
     code,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   };
   const doc = await firebase
     .firestore()
