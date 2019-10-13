@@ -35,6 +35,9 @@ export const remoconReducer = (
         isLoading: true,
       };
     }
+    case actionTypes.SEND_SIGNAL_START: {
+      return { ...state };
+    }
     case actionTypes.RECEIVE_SIGNAL_START: {
       return {
         ...state,
@@ -69,7 +72,6 @@ export const remoconReducer = (
       };
     }
     // 標準のstart
-    case actionTypes.SEND_SIGNAL_START:
     case actionTypes.REGISTER_SIGNAL_START: {
       return {
         ...state,

@@ -50,7 +50,7 @@ const IndexPage: NextPage<{}> = () => {
   };
 
   return (
-    <Layout title="Home">
+    <Layout title="Home" loading={state.isLoading}>
       <div>
         <Container maxWidth="sm">
           <GridList cellHeight={140} spacing={8}>

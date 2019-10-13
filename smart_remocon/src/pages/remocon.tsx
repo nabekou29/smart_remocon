@@ -43,7 +43,7 @@ const RemoconPage: NextPage = () => {
   const classes = useStyles();
   const state = useSelector((state: AppState) => state.remocon);
   return (
-    <Layout title="Remocon">
+    <Layout title="Remocon" loading={state.isLoading}>
       <Container maxWidth="sm">
         <GridList cellHeight={140} spacing={8} cols={1}>
           <GridListTile className={classes.listTitleTile} key="SubHeader">
