@@ -21,42 +21,30 @@ admin.initializeApp({
   databaseURL: 'https://raspi-home-1823.firebaseio.com',
 });
 
-/** 初回の呼び出しを無視する */
-const passFirstCall = (f: any) => {
-  let called = false;
-  let wrap_f = (...args: any[]) => {
-    if (called) {
-      return f(...args);
-    }
-    called = true;
-  };
-  return wrap_f;
-};
-
 // 送信
 admin
   .database()
   .ref('/send_signal')
-  .on(
-    'value',
-    passFirstCall((snapshot: admin.database.DataSnapshot) => {
-      const data = snapshot.val();
-      if (data.signal_id) {
-        send(data.signal_id);
-      }
-    })
-  );
+  .on('child_changed', (snapshot: admin.database.DataSnapshot | null) => {
+    if (!snapshot) {
+      return;
+    }
+    const data = snapshot.val();
+    if (data.signal_id) {
+      send(data.signal_id);
+    }
+  });
 
 // 受信・登録
 admin
   .database()
   .ref('/receive_new_signal')
-  .on(
-    'value',
-    passFirstCall((snapshot: admin.database.DataSnapshot) => {
-      receive().then((signal: number[]) => registerSignal(signal));
-    })
-  );
+  .on('child_changed', (snapshot: admin.database.DataSnapshot | null) => {
+    if (!snapshot) {
+      return;
+    }
+    receive().then((signal: number[]) => registerSignal(signal));
+  });
 
 console.log('Completed!');
 
@@ -107,5 +95,5 @@ export const registerSignal = async (code: number[]): Promise<any> => {
   return await admin
     .database()
     .ref('received_signal')
-    .set(data);
+    .set({ data });
 };

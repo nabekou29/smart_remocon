@@ -29,7 +29,7 @@ export const sendSignal = async (
   return await firebase
     .database()
     .ref('send_signal')
-    .set(data);
+    .set({ data });
 };
 
 /** リモコンの作成 */
@@ -54,6 +54,16 @@ export const deleteRemocon = async (id: string): Promise<void> => {
     .collection('remocon')
     .doc(id)
     .delete();
+
+  const signalSnapshot = await firebase
+    .firestore()
+    .collection('signal')
+    .where('remocon_id', '==', id)
+    .get();
+
+  signalSnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+    doc.ref.delete();
+  });
 };
 
 /** リモコンと信号の一覧を取得する */
@@ -139,7 +149,7 @@ export const deleteSignal = async (id: string): Promise<void> => {
 
 /** 信号を受け取ります */
 export const receiveSignal = async (
-  timeout: number = 1000
+  timeout: number = 10000
 ): Promise<number[]> => {
   const data = {
     timestamp: firebase.database.ServerValue.TIMESTAMP,
@@ -147,7 +157,7 @@ export const receiveSignal = async (
   await firebase
     .database()
     .ref('receive_new_signal')
-    .set(data);
+    .set({ data });
 
   return new Promise(async (resolve, reject) => {
     const ref = firebase.database().ref('received_signal');
@@ -155,8 +165,12 @@ export const receiveSignal = async (
 
     await ref.on(
       'child_changed',
-      (snapshot: firebase.database.DataSnapshot) => {
+      (snapshot: firebase.database.DataSnapshot | null) => {
+        if (!snapshot) {
+          return;
+        }
         const data = snapshot.val();
+        console.log(data);
         resolve(data.signal as number[]);
       }
     );
