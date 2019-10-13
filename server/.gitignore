@@ -133,4 +133,6 @@ public
 # TernJS port file
 .tern-port
 
-/dist
+dist
+
+raspi-home-1823-firebase-adminsdk-6ih25-ce34185a30.json

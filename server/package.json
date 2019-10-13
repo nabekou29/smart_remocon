@@ -16,7 +16,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^6.4.0"
+    "firebase": "^6.4.0",
+    "firebase-admin": "^8.6.0"
   },
   "devDependencies": {
     "@types/firebase": "^3.2.1",
