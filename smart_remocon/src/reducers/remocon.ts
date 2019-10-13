@@ -62,8 +62,15 @@ export const remoconReducer = (
         isWaitingSignal: false,
       };
     }
+    case actionTypes.REGISTER_SIGNAL_SUCCEED: {
+      return {
+        ...state,
+        signals: [...state.signals, action.payload.result.signal],
+      };
+    }
     // 標準のstart
-    case actionTypes.SEND_SIGNAL_START: {
+    case actionTypes.SEND_SIGNAL_START:
+    case actionTypes.REGISTER_SIGNAL_START: {
       return {
         ...state,
         isLoading: true,
@@ -72,7 +79,8 @@ export const remoconReducer = (
     // 標準のfail
     case actionTypes.INITIALIZE_FAIL:
     case actionTypes.SEND_SIGNAL_FAIL:
-    case actionTypes.RECEIVE_SIGNAL_FAIL: {
+    case actionTypes.RECEIVE_SIGNAL_FAIL:
+    case actionTypes.REGISTER_SIGNAL_FAIL: {
       return {
         ...state,
         isLoading: false,

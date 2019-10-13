@@ -13,10 +13,13 @@ export enum RemoconActionTypes {
   RECEIVE_SIGNAL_START = 'REMOCON/RECEIVE_SIGNAL_START',
   RECEIVE_SIGNAL_SUCCEED = 'REMOCON/RECEIVE_SIGNAL_SUCCEED',
   RECEIVE_SIGNAL_FAIL = 'REMOCON/RECEIVE_SIGNAL_FAIL',
+  REGISTER_SIGNAL_START = 'REMOCON/REGISTER_SIGNAL_START',
+  REGISTER_SIGNAL_SUCCEED = 'REMOCON/REGISTER_SIGNAL_SUCCEED',
+  REGISTER_SIGNAL_FAIL = 'REMOCON/REGISTER_SIGNAL_FAIL',
 }
 
-/** 初期化のProps */
-interface InitializeProps {
+/** 初期化のParams */
+interface InitializeParams {
   remoconId: string;
 }
 
@@ -28,17 +31,17 @@ interface InitializeResult {
 
 /** 初期化 */
 export const initialize = {
-  start: (props: InitializeProps) => ({
+  start: (params: InitializeParams) => ({
     type: RemoconActionTypes.INITIALIZE_START as typeof RemoconActionTypes.INITIALIZE_START,
-    payload: props,
+    payload: params,
   }),
-  succeed: (result: InitializeResult) => ({
+  succeed: (params: InitializeParams, result: InitializeResult) => ({
     type: RemoconActionTypes.INITIALIZE_SUCCEED as typeof RemoconActionTypes.INITIALIZE_SUCCEED,
-    payload: { result },
+    payload: { params, result },
   }),
-  fail: (error: AxiosError) => ({
+  fail: (params: InitializeParams, error: AxiosError) => ({
     type: RemoconActionTypes.INITIALIZE_FAIL as typeof RemoconActionTypes.INITIALIZE_FAIL,
-    payload: { error },
+    payload: { params, error },
   }),
 };
 
@@ -65,7 +68,7 @@ export const sendSignal = {
 
 /** 信号受信のResult */
 interface ReceiveSignalResult {
-  signal: number[];
+  code: number[];
 }
 
 /** 信号受信 */
@@ -84,6 +87,32 @@ export const receiveSignal = {
   }),
 };
 
+/** 信号の登録のParams */
+interface RegisterSignalParams {
+  signalId: string;
+}
+
+/** 信号の登録のResult */
+interface RegisterSignalResult {
+  signal: Signal;
+}
+
+/** 信号の登録 */
+export const registerSignal = {
+  start: (params: RegisterSignalParams) => ({
+    type: RemoconActionTypes.REGISTER_SIGNAL_START as typeof RemoconActionTypes.REGISTER_SIGNAL_START,
+    payload: params,
+  }),
+  succeed: (params: RegisterSignalParams, result: RegisterSignalResult) => ({
+    type: RemoconActionTypes.REGISTER_SIGNAL_SUCCEED as typeof RemoconActionTypes.REGISTER_SIGNAL_SUCCEED,
+    payload: { params, result },
+  }),
+  fail: (params: RegisterSignalParams, error: AxiosError) => ({
+    type: RemoconActionTypes.REGISTER_SIGNAL_FAIL as typeof RemoconActionTypes.REGISTER_SIGNAL_FAIL,
+    payload: { params, error },
+  }),
+};
+
 /** アクション一覧 */
 export type RemoconAction =
   | ReturnType<typeof initialize.start>
@@ -94,4 +123,7 @@ export type RemoconAction =
   | ReturnType<typeof sendSignal.fail>
   | ReturnType<typeof receiveSignal.start>
   | ReturnType<typeof receiveSignal.succeed>
-  | ReturnType<typeof receiveSignal.fail>;
+  | ReturnType<typeof receiveSignal.fail>
+  | ReturnType<typeof registerSignal.start>
+  | ReturnType<typeof registerSignal.succeed>
+  | ReturnType<typeof registerSignal.fail>;
