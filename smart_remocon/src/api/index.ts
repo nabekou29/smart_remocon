@@ -152,6 +152,7 @@ export const receiveSignal = async (
   timeout: number = 10000
 ): Promise<number[]> => {
   const data = {
+    timeout,
     timestamp: firebase.database.ServerValue.TIMESTAMP,
   };
   await firebase

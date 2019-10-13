@@ -43,7 +43,8 @@ admin
     if (!snapshot) {
       return;
     }
-    receive().then((signal: number[]) => registerSignal(signal));
+    const data = snapshot.val();
+    receive(data.timeout).then((signal: number[]) => registerSignal(signal));
   });
 
 console.log('Completed!');
@@ -66,7 +67,7 @@ async function send(id: string) {
       if (!data) {
         throw new Error();
       }
-      codes[id] = data['code'];
+      codes[id] = data.code;
       fs.writeFileSync(`${CWD}/${CODE_FILE}`, JSON.stringify(codes));
     }
   }
@@ -75,10 +76,10 @@ async function send(id: string) {
 }
 
 /** 信号の受信 */
-async function receive(): Promise<number[]> {
+async function receive(timeout: number): Promise<number[]> {
   const command = `python3 ${CWD}/irrp.py -r -g${RECEIVE_GPIO_NO} -f ${CWD}/${TMP_CODE_FILE} ${TMP_CODE_NAME} --no-confirm --post 130`;
   console.log('receiving...');
-  execSync(command);
+  execSync(command, { timeout });
   console.log('received!');
 
   const text = fs.readFileSync(`${CWD}/${TMP_CODE_FILE}`, 'utf8');

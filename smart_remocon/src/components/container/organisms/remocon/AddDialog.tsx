@@ -78,7 +78,7 @@ const AddDialog: React.FC<InjectedFormProps> = (props: InjectedFormProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <Grid container spacing={3}>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <Field
                 name="name"
                 label="名前"
