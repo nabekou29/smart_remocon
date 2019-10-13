@@ -10,7 +10,7 @@ import { AxiosError } from 'axios';
 export interface RemoconState {
   remocon?: Remocon;
   signals: Signal[];
-  receivedSignal?: number[];
+  receivedCode?: number[];
   isLoading: boolean;
   isWaitingSignal: boolean;
   error?: AxiosError;
@@ -58,7 +58,7 @@ export const remoconReducer = (
     case actionTypes.RECEIVE_SIGNAL_SUCCEED: {
       return {
         ...state,
-        receivedSignal: [...action.payload.result.signal],
+        receivedCode: [...action.payload.result.code],
         isWaitingSignal: false,
       };
     }

@@ -99,9 +99,9 @@ async function receive(): Promise<number[]> {
 }
 
 /** 受信した信号の登録 */
-export const registerSignal = async (signal: number[]): Promise<any> => {
+export const registerSignal = async (code: number[]): Promise<any> => {
   const data = {
-    signal,
+    code,
     timestamp: admin.database.ServerValue.TIMESTAMP,
   };
   return await admin
