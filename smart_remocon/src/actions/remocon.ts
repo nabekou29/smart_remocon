@@ -89,7 +89,9 @@ export const receiveSignal = {
 
 /** 信号の登録のParams */
 interface RegisterSignalParams {
-  signalId: string;
+  remoconId: string;
+  name: string;
+  code: number[];
 }
 
 /** 信号の登録のResult */
