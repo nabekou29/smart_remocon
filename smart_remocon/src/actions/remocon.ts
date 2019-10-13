@@ -10,6 +10,9 @@ export enum RemoconActionTypes {
   SEND_SIGNAL_START = 'REMOCON/SEND_SIGNAL_START',
   SEND_SIGNAL_SUCCEED = 'REMOCON/SEND_SIGNAL_SUCCEED',
   SEND_SIGNAL_FAIL = 'REMOCON/SEND_SIGNAL_FAIL',
+  RECEIVE_SIGNAL_START = 'REMOCON/RECEIVE_SIGNAL_START',
+  RECEIVE_SIGNAL_SUCCEED = 'REMOCON/RECEIVE_SIGNAL_SUCCEED',
+  RECEIVE_SIGNAL_FAIL = 'REMOCON/RECEIVE_SIGNAL_FAIL',
 }
 
 /** 初期化のProps */
@@ -39,23 +42,44 @@ export const initialize = {
   }),
 };
 
-/** 信号送信のProps */
-interface SendSignalProps {
+/** 信号送信のParams */
+interface SendSignalParams {
   signalId: string;
 }
 
 /** 信号送信 */
 export const sendSignal = {
-  start: (props: SendSignalProps) => ({
+  start: (params: SendSignalParams) => ({
     type: RemoconActionTypes.SEND_SIGNAL_START as typeof RemoconActionTypes.SEND_SIGNAL_START,
-    payload: props,
+    payload: params,
   }),
-  succeed: () => ({
+  succeed: (params: SendSignalParams) => ({
     type: RemoconActionTypes.SEND_SIGNAL_SUCCEED as typeof RemoconActionTypes.SEND_SIGNAL_SUCCEED,
+    payload: { params },
+  }),
+  fail: (params: SendSignalParams, error: AxiosError) => ({
+    type: RemoconActionTypes.SEND_SIGNAL_FAIL as typeof RemoconActionTypes.SEND_SIGNAL_FAIL,
+    payload: { params, error },
+  }),
+};
+
+/** 信号受信のResult */
+interface ReceiveSignalResult {
+  signal: number[];
+}
+
+/** 信号受信 */
+export const receiveSignal = {
+  start: () => ({
+    type: RemoconActionTypes.RECEIVE_SIGNAL_START as typeof RemoconActionTypes.RECEIVE_SIGNAL_START,
     payload: {},
   }),
+  succeed: (result: ReceiveSignalResult) => ({
+    type: RemoconActionTypes.RECEIVE_SIGNAL_SUCCEED as typeof RemoconActionTypes.RECEIVE_SIGNAL_SUCCEED,
+    payload: { result },
+  }),
   fail: (error: AxiosError) => ({
-    type: RemoconActionTypes.SEND_SIGNAL_FAIL as typeof RemoconActionTypes.SEND_SIGNAL_FAIL,
+    type: RemoconActionTypes.RECEIVE_SIGNAL_FAIL as typeof RemoconActionTypes.RECEIVE_SIGNAL_FAIL,
     payload: { error },
   }),
 };
@@ -67,4 +91,7 @@ export type RemoconAction =
   | ReturnType<typeof initialize.fail>
   | ReturnType<typeof sendSignal.start>
   | ReturnType<typeof sendSignal.succeed>
-  | ReturnType<typeof sendSignal.fail>;
+  | ReturnType<typeof sendSignal.fail>
+  | ReturnType<typeof receiveSignal.start>
+  | ReturnType<typeof receiveSignal.succeed>
+  | ReturnType<typeof receiveSignal.fail>;

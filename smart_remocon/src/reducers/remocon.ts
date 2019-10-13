@@ -8,20 +8,19 @@ import { AxiosError } from 'axios';
 
 /** State */
 export interface RemoconState {
-  remocon: Remocon | null;
+  remocon?: Remocon;
   signals: Signal[];
+  receivedSignal?: number[];
   isLoading: boolean;
   isWaitingSignal: boolean;
-  error: AxiosError | null;
+  error?: AxiosError;
 }
 
 /** 初期値 */
 export const initialState: RemoconState = {
-  remocon: null,
   signals: [],
   isLoading: false,
   isWaitingSignal: false,
-  error: null,
 };
 
 /** Reducer */
@@ -36,10 +35,10 @@ export const remoconReducer = (
         isLoading: true,
       };
     }
-    case actionTypes.SEND_SIGNAL_START: {
+    case actionTypes.RECEIVE_SIGNAL_START: {
       return {
         ...state,
-        isLoading: true,
+        isWaitingSignal: true,
       };
     }
     case actionTypes.INITIALIZE_SUCCEED: {
@@ -56,11 +55,28 @@ export const remoconReducer = (
         isLoading: false,
       };
     }
+    case actionTypes.RECEIVE_SIGNAL_SUCCEED: {
+      return {
+        ...state,
+        receivedSignal: [...action.payload.result.signal],
+        isWaitingSignal: false,
+      };
+    }
+    // 標準のstart
+    case actionTypes.SEND_SIGNAL_START: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    // 標準のfail
+    case actionTypes.INITIALIZE_FAIL:
     case actionTypes.SEND_SIGNAL_FAIL:
-    case actionTypes.INITIALIZE_FAIL: {
+    case actionTypes.RECEIVE_SIGNAL_FAIL: {
       return {
         ...state,
         isLoading: false,
+        isWaitingSignal: false,
         error: action.payload.error,
       };
     }

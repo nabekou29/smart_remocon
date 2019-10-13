@@ -25,9 +25,9 @@ function* runSendingSignal(action: ReturnType<typeof sendSignal.start>) {
   try {
     const { signalId } = action.payload;
     yield call(() => api.sendSignal(signalId, 0));
-    yield put(sendSignal.succeed());
+    yield put(sendSignal.succeed(action.payload));
   } catch (error) {
-    yield put(sendSignal.fail(error));
+    yield put(sendSignal.fail(action.payload, error));
   }
 }
 
