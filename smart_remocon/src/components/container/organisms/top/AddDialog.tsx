@@ -19,7 +19,11 @@ import {
   reduxForm,
 } from 'redux-form';
 import { closeAddDialog, register } from '../../../../actions/top';
-import { createValidator, required } from '../../../../utils/validation';
+import {
+  createValidator,
+  maxLength,
+  required,
+} from '../../../../utils/validation';
 
 import { AppState } from '../../../../reducers';
 import InputField from '../../../presentational/atoms/form/InputField';
@@ -34,7 +38,7 @@ interface FormData {
 
 // バリデーション
 const validate = createValidator({
-  name: [required],
+  name: [required, maxLength(20)],
 });
 
 const AddDialog: React.FC<InjectedFormProps> = (props: InjectedFormProps) => {

@@ -13,6 +13,7 @@ export interface RemoconState {
   receivedCode?: number[];
   isLoading: boolean;
   isWaitingSignal: boolean;
+  isOpenAddDialog: boolean;
   error?: AxiosError;
 }
 
@@ -21,6 +22,7 @@ export const initialState: RemoconState = {
   signals: [],
   isLoading: false,
   isWaitingSignal: false,
+  isOpenAddDialog: false,
 };
 
 /** Reducer */
@@ -29,6 +31,12 @@ export const remoconReducer = (
   action: RemoconAction
 ): RemoconState => {
   switch (action.type) {
+    case actionTypes.CLOSE_ADD_DIALOG: {
+      return {
+        ...state,
+        isOpenAddDialog: false,
+      };
+    }
     case actionTypes.INITIALIZE_START: {
       return {
         ...initialState,
@@ -63,12 +71,15 @@ export const remoconReducer = (
         ...state,
         receivedCode: [...action.payload.result.code],
         isWaitingSignal: false,
+        isOpenAddDialog: true,
+        isLoading: false,
       };
     }
     case actionTypes.REGISTER_SIGNAL_SUCCEED: {
       return {
         ...state,
         signals: [...state.signals, action.payload.result.signal],
+        isLoading: false,
       };
     }
     // 標準のstart

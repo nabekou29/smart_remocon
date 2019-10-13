@@ -12,14 +12,16 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { NextPage, NextPageContext } from 'next';
+import { initialize, receiveSignal } from '../actions/remocon';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Add } from '@material-ui/icons';
+import AddDialog from '../components/container/organisms/remocon/AddDialog';
 import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
+import Loading from '../components/presentational/molecules/Loading';
 import SignalCard from '../components/presentational/molecules/SignalCard';
 import { Store } from 'redux';
-import { initialize } from '../actions/remocon';
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,13 +46,24 @@ const useStyles = makeStyles((theme: Theme) =>
 const RemoconPage: NextPage = () => {
   const classes = useStyles();
   const state = useSelector((state: AppState) => state.remocon);
+  const dispatch = useDispatch();
+
+  const onClickAddButton = () => {
+    dispatch(receiveSignal.start());
+  };
+
   return (
     <Layout title="Remocon" loading={state.isLoading}>
       <Container maxWidth="sm">
-        <Fab className={classes.addButton} color="primary">
+        <Fab
+          className={classes.addButton}
+          color="primary"
+          onClick={onClickAddButton}
+        >
           <Add />
         </Fab>
-        <GridList cellHeight={140} spacing={8} cols={1}>
+        <AddDialog></AddDialog>
+        <GridList cellHeight={50} spacing={8} cols={1}>
           <GridListTile className={classes.listTitleTile} key="SubHeader">
             <Box display="flex" justifyContent="space-between">
               <Typography
@@ -70,6 +83,7 @@ const RemoconPage: NextPage = () => {
           ))}
         </GridList>
       </Container>
+      <Loading open={state.isWaitingSignal}></Loading>
     </Layout>
   );
 };

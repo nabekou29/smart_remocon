@@ -170,8 +170,7 @@ export const receiveSignal = async (
           return;
         }
         const data = snapshot.val();
-        console.log(data);
-        resolve(data.signal as number[]);
+        resolve(data.code as number[]);
       }
     );
 

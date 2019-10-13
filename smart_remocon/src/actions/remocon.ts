@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 
 /** Actionの種類 */
 export enum RemoconActionTypes {
+  CLOSE_ADD_DIALOG = 'REMOCON/CLOSE_ADD_DIALOG',
   INITIALIZE_START = 'REMOCON/INITIALIZE_START',
   INITIALIZE_SUCCEED = 'REMOCON/INITIALIZE_SUCCEED',
   INITIALIZE_FAIL = 'REMOCON/INITIALIZE_FAIL',
@@ -17,6 +18,11 @@ export enum RemoconActionTypes {
   REGISTER_SIGNAL_SUCCEED = 'REMOCON/REGISTER_SIGNAL_SUCCEED',
   REGISTER_SIGNAL_FAIL = 'REMOCON/REGISTER_SIGNAL_FAIL',
 }
+
+/** 追加ダイアログを閉じる */
+export const closeAddDialog = () => ({
+  type: RemoconActionTypes.CLOSE_ADD_DIALOG as typeof RemoconActionTypes.CLOSE_ADD_DIALOG,
+});
 
 /** 初期化のParams */
 interface InitializeParams {
@@ -117,6 +123,7 @@ export const registerSignal = {
 
 /** アクション一覧 */
 export type RemoconAction =
+  | ReturnType<typeof closeAddDialog>
   | ReturnType<typeof initialize.start>
   | ReturnType<typeof initialize.succeed>
   | ReturnType<typeof initialize.fail>

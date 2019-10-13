@@ -62,6 +62,7 @@ const IndexPage: NextPage<{}> = () => {
           >
             <Add />
           </Fab>
+          <AddDialog></AddDialog>
           <GridList cellHeight={140} spacing={8}>
             <GridListTile
               className={classes.listTitleTile}
@@ -76,7 +77,6 @@ const IndexPage: NextPage<{}> = () => {
                 >
                   リモコン一覧
                 </Typography>
-                <AddDialog></AddDialog>
               </Box>
             </GridListTile>
             {state.remocons.map(r => (

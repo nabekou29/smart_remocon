@@ -33,7 +33,11 @@ interface Props extends Omit<ModalProps, 'children'> {
 }
 
 /** ローディング */
-const Loading: React.FC<Props> = ({ text = '読み込み中...', ...props }) => {
+const Loading: React.FC<Props> = ({
+  text = '読み込み中...',
+  children,
+  ...props
+}) => {
   const classes = useStyles();
   return (
     <Modal className={classes.modal} {...props}>
@@ -45,6 +49,7 @@ const Loading: React.FC<Props> = ({ text = '読み込み中...', ...props }) => 
             </Box>
             <span>{text}</span>
           </Box>
+          {children}
         </div>
       </Fade>
     </Modal>

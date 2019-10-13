@@ -18,8 +18,12 @@ import {
   InjectedFormProps,
   reduxForm,
 } from 'redux-form';
-import { closeAddDialog, register } from '../../../../actions/top';
-import { createValidator, required } from '../../../../utils/validation';
+import { closeAddDialog, registerSignal } from '../../../../actions/remocon';
+import {
+  createValidator,
+  maxLength,
+  required,
+} from '../../../../utils/validation';
 
 import { AppState } from '../../../../reducers';
 import InputField from '../../../presentational/atoms/form/InputField';
@@ -34,18 +38,20 @@ interface FormData {
 
 // バリデーション
 const validate = createValidator({
-  name: [required],
+  name: [required, maxLength(20)],
 });
 
 const AddDialog: React.FC<InjectedFormProps> = (props: InjectedFormProps) => {
   const { handleSubmit, submitting, invalid } = props;
-  const state = useSelector((app: AppState) => app.top);
+  const state = useSelector((app: AppState) => app.remocon);
   const dispatch = useDispatch();
 
   // サブミット
   const onSubmit: FormSubmitHandler<FormData> = (value, dispatch) => {
     dispatch(
-      register.start({
+      registerSignal.start({
+        remoconId: state.remocon!.id,
+        code: state.receivedCode || [],
         name: value.name || '',
       })
     );
