@@ -11,7 +11,6 @@ import firebaseConfig from '../firebaseConfig';
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-const firestore = firebase.firestore();
 
 /**
  * 指定分後に信号を送信します
@@ -67,7 +66,8 @@ export const findRemoconAndSignals = async (
   let remocon: Remocon | null = null;
   const signals = new Array<Signal>();
 
-  const remoconDoc = await firestore
+  const remoconDoc = await firebase
+    .firestore()
     .collection('remocon')
     .doc(id)
     .get();
@@ -79,7 +79,8 @@ export const findRemoconAndSignals = async (
   if (!remocon) {
     throw new Error();
   }
-  const signalSnapshot = await firestore
+  const signalSnapshot = await firebase
+    .firestore()
     .collection('signal')
     .where('remocon_id', '==', id)
     .get();
@@ -93,11 +94,45 @@ export const findRemoconAndSignals = async (
 
 /** リモコンの一覧を取得する */
 export const findAllRemocon = async (): Promise<Remocon[]> => {
-  const snapshot = await firestore.collection('remocon').get();
+  const snapshot = await firebase
+    .firestore()
+    .collection('remocon')
+    .get();
 
   const result = new Array<Remocon>();
   snapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
     result.push(remoconDao.encode(doc));
   });
   return result;
+};
+
+/** 信号を受け取ります */
+export const receiveSignal = async (
+  timeout: number = 1000
+): Promise<number[]> => {
+  const data = {
+    timestamp: firebase.database.ServerValue.TIMESTAMP,
+  };
+  await firebase
+    .database()
+    .ref('receive_new_signal')
+    .set(data);
+
+  return new Promise(async (resolve, reject) => {
+    const ref = firebase.database().ref('received_signal');
+    ref.off('child_changed');
+
+    await ref.on(
+      'child_changed',
+      (snapshot: firebase.database.DataSnapshot) => {
+        const data = snapshot.val();
+        resolve(data.signal as number[]);
+      }
+    );
+
+    setTimeout(() => {
+      ref.off('child_changed');
+      reject(new Error('timeout'));
+    }, timeout);
+  });
 };

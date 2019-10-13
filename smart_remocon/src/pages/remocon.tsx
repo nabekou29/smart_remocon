@@ -76,7 +76,7 @@ RemoconPage.getInitialProps = async (
   ctx: NextPageContext & { store: Store }
 ) => {
   if (typeof ctx.query.id !== 'string') {
-    ctx.res!.writeHead(404);
+    ctx.res!.writeHead!(404);
     return {};
   }
   ctx.store.dispatch(initialize.start({ remoconId: ctx.query.id }));

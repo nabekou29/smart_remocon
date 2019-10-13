@@ -41,8 +41,8 @@ admin
     'value',
     passFirstCall((snapshot: admin.database.DataSnapshot) => {
       const data = snapshot.val();
-      if (data['signal_id']) {
-        send(data['signal_id']);
+      if (data.signal_id) {
+        send(data.signal_id);
       }
     })
   );
