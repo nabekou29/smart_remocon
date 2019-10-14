@@ -14,11 +14,10 @@ import { Close, Done, SettingsRemote, Timer } from '@material-ui/icons';
 
 import { CardProps } from '@material-ui/core/Card';
 import { Signal } from '../../../interfaces/entities';
+import { SnackbarContentProps } from '@material-ui/core/SnackbarContent';
 import { green } from '@material-ui/core/colors';
 import { sendSignal } from '../../../actions/remocon';
 import { useDispatch } from 'react-redux';
-
-// import Link from 'next/link';
 
 interface Props extends CardProps {
   signal: Signal;
@@ -82,11 +81,16 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
   );
 };
 
-const SuccessSnackbarContent: React.FC<{ onClose: () => void }> = ({
+interface SuccessSnackbarContentProps extends SnackbarContentProps {
+  onClose: () => void;
+}
+const SuccessSnackbarContent: React.FC<SuccessSnackbarContentProps> = ({
   onClose,
+  ...props
 }) => {
   return (
     <SnackbarContent
+      {...props}
       aria-describedby="client-snackbar"
       message={
         <Box

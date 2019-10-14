@@ -1,3 +1,5 @@
+import 'firebase/auth';
+
 import * as React from 'react';
 import * as firebase from 'firebase/app';
 
@@ -11,13 +13,19 @@ import {
 } from '@material-ui/core';
 
 import Link from 'next/link';
-import Router from 'next/router';
+import { useAuthUser } from '../../../../utils/customHooks';
 
 /** サイドメニュー */
 const MenuList: React.FC = () => {
+  const user = useAuthUser();
+
+  const onLogin = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(provider);
+  };
+
   const onLogout = async () => {
     await firebase.auth().signOut();
-    Router.push('/login');
   };
   return (
     <>
@@ -31,12 +39,21 @@ const MenuList: React.FC = () => {
           </ListItem>
         </Link>
         <Divider />
-        <ListItem button onClick={onLogout}>
-          <ListItemIcon>
-            <AccountCircle />
-          </ListItemIcon>
-          <ListItemText>ログアウト</ListItemText>
-        </ListItem>
+        {user ? (
+          <ListItem button onClick={onLogout}>
+            <ListItemIcon>
+              <AccountCircle />
+            </ListItemIcon>
+            <ListItemText>ログアウト</ListItemText>
+          </ListItem>
+        ) : (
+          <ListItem button onClick={onLogin}>
+            <ListItemIcon>
+              <AccountCircle />
+            </ListItemIcon>
+            <ListItemText>ログイン</ListItemText>
+          </ListItem>
+        )}
       </List>
     </>
   );

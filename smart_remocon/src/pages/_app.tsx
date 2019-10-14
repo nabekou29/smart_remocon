@@ -19,7 +19,8 @@ class MyApp extends App<{ store: Store }> {
     if (!firebase.auth().currentUser) {
       firebase.auth().onAuthStateChanged(user => {
         if (!user) {
-          Router.push('/login');
+          const provider = new firebase.auth.GoogleAuthProvider();
+          firebase.auth().signInWithPopup(provider);
         }
       });
     }

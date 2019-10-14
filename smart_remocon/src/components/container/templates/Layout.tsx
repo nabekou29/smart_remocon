@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Box } from '@material-ui/core';
 import Head from 'next/head';
 import Loading from '../../presentational/molecules/Loading';
 import MyAppBar from '../organisms/common/AppBar';
@@ -23,7 +24,7 @@ const Layout: React.FC<Props> = ({
       <MyAppBar />
     </header>
     <Loading open={loading}></Loading>
-    {children}
+    <Box pt={7}>{children}</Box>
   </>
 );
 
