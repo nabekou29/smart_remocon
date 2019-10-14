@@ -1,7 +1,9 @@
 import * as admin from 'firebase-admin';
 
+import dayjs from 'dayjs';
 import { execSync } from 'child_process';
 import fs from 'fs';
+import schedule from 'node-schedule';
 
 const CWD = process.cwd();
 /** コード保存用のファイル名 */
@@ -30,8 +32,13 @@ admin
       return;
     }
     const data = snapshot.val();
-    if (data.signal_id) {
+    if (data.minutes === 0) {
       send(data.signal_id);
+    } else {
+      const date = dayjs().add(data.minutes, 'minute');
+      schedule.scheduleJob(date.toDate(), () => {
+        send(data.signal_id);
+      });
     }
   });
 
