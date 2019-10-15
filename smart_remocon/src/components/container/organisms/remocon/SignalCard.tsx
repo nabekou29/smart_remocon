@@ -13,10 +13,10 @@ import {
 import { Close, Done, SettingsRemote, Timer } from '@material-ui/icons';
 
 import { CardProps } from '@material-ui/core/Card';
-import { Signal } from '../../../interfaces/entities';
+import { Signal } from '../../../../interfaces/entities';
 import { SnackbarContentProps } from '@material-ui/core/SnackbarContent';
 import { green } from '@material-ui/core/colors';
-import { sendSignal } from '../../../actions/remocon';
+import { sendSignal } from '../../../../actions/remocon';
 import { useDispatch } from 'react-redux';
 
 interface Props extends CardProps {

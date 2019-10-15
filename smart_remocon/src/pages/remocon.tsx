@@ -20,7 +20,7 @@ import AddDialog from '../components/container/organisms/remocon/AddDialog';
 import { AppState } from '../reducers';
 import Layout from '../components/container/templates/Layout';
 import Loading from '../components/presentational/molecules/Loading';
-import SignalCard from '../components/presentational/molecules/SignalCard';
+import SignalCard from '../components/container/organisms/remocon/SignalCard';
 import { Store } from 'redux';
 
 const useStyles = makeStyles((theme: Theme) =>
