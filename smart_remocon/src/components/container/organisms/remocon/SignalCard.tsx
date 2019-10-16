@@ -5,17 +5,15 @@ import {
   Button,
   ButtonGroup,
   Card,
-  IconButton,
   Snackbar,
-  SnackbarContent,
   Typography,
 } from '@material-ui/core';
-import { Close, Done, SettingsRemote, Timer } from '@material-ui/icons';
+import { SettingsRemote, Timer } from '@material-ui/icons';
 
 import { CardProps } from '@material-ui/core/Card';
+import SetTimerDialog from './SetTimerDialog';
 import { Signal } from '../../../../interfaces/entities';
-import { SnackbarContentProps } from '@material-ui/core/SnackbarContent';
-import { green } from '@material-ui/core/colors';
+import SuccessSnackbarContent from '../../../presentational/molecules/SuccessSnackbarContent';
 import { sendSignal } from '../../../../actions/remocon';
 import { useDispatch } from 'react-redux';
 
@@ -25,12 +23,21 @@ interface Props extends CardProps {
 
 const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
   const [open, setOpen] = React.useState(false);
+  const [openTimerDialog, setOpenTimerDialog] = React.useState(false);
   const dispatch = useDispatch();
 
   const onSendSignal = () => {
     setOpen(false);
     dispatch(sendSignal.start({ signalId: signal.id }));
     setTimeout(() => setOpen(true), 200);
+  };
+
+  const onOpenTimerDialog = () => {
+    setOpenTimerDialog(true);
+  };
+
+  const closeTimerDialog = () => {
+    setOpenTimerDialog(false);
   };
 
   const closeMessage = () => {
@@ -59,11 +66,16 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
             variant="outlined"
             color="primary"
             size="small"
-            onClick={onSendSignal}
+            onClick={onOpenTimerDialog}
           >
             <Timer />
             TIMER
           </Button>
+          <SetTimerDialog
+            signal={signal}
+            onClose={closeTimerDialog}
+            open={openTimerDialog}
+          ></SetTimerDialog>
         </ButtonGroup>
         <Snackbar
           anchorOrigin={{
@@ -78,45 +90,6 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
         </Snackbar>
       </Box>
     </Card>
-  );
-};
-
-interface SuccessSnackbarContentProps extends SnackbarContentProps {
-  onClose: () => void;
-}
-const SuccessSnackbarContent: React.FC<SuccessSnackbarContentProps> = ({
-  onClose,
-  ...props
-}) => {
-  return (
-    <SnackbarContent
-      {...props}
-      aria-describedby="client-snackbar"
-      message={
-        <Box
-          id="client-snackbar"
-          component="span"
-          display="flex"
-          alignItems="center"
-        >
-          <Done />
-          送信しました
-        </Box>
-      }
-      action={[
-        <IconButton
-          key="close"
-          aria-label="close"
-          color="inherit"
-          onClick={onClose}
-        >
-          <Close />
-        </IconButton>,
-      ]}
-      style={{
-        backgroundColor: green[400],
-      }}
-    />
   );
 };
 

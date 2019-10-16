@@ -54,6 +54,7 @@ export const initialize = {
 /** 信号送信のParams */
 interface SendSignalParams {
   signalId: string;
+  minutes?: number;
 }
 
 /** 信号送信 */

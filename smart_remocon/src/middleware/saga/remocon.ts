@@ -27,8 +27,8 @@ function* runInitialization(action: ReturnType<typeof initialize.start>) {
 /** 信号送信 */
 function* runSendingSignal(action: ReturnType<typeof sendSignal.start>) {
   try {
-    const { signalId } = action.payload;
-    yield call(() => api.sendSignal(signalId, 0));
+    const { signalId, minutes } = action.payload;
+    yield call(() => api.sendSignal(signalId, minutes || 0));
     yield put(sendSignal.succeed(action.payload));
   } catch (error) {
     yield put(sendSignal.fail(action.payload, error));
