@@ -36,11 +36,16 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
     setOpenTimerDialog(true);
   };
 
-  const closeTimerDialog = () => {
+  const onCloseTimerDialog = () => {
     setOpenTimerDialog(false);
   };
 
-  const closeMessage = () => {
+  const onConfirmTimerDialog = () => {
+    setOpen(false);
+    setTimeout(() => setOpen(true), 200);
+  };
+
+  const onCloseMessage = () => {
     setOpen(false);
   };
 
@@ -73,7 +78,8 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
           </Button>
           <SetTimerDialog
             signal={signal}
-            onClose={closeTimerDialog}
+            onClose={onCloseTimerDialog}
+            onConfirm={onConfirmTimerDialog}
             open={openTimerDialog}
           ></SetTimerDialog>
         </ButtonGroup>
@@ -84,9 +90,9 @@ const SignalCard: React.FC<Props> = ({ signal, ...props }) => {
           }}
           open={open}
           autoHideDuration={4000}
-          onClose={closeMessage}
+          onClose={onCloseMessage}
         >
-          <SuccessSnackbarContent onClose={closeMessage} />
+          <SuccessSnackbarContent onClose={onCloseMessage} />
         </Snackbar>
       </Box>
     </Card>
