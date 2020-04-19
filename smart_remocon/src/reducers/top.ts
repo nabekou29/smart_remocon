@@ -1,6 +1,6 @@
+import { AxiosError } from 'axios';
 import { TopAction, TopActionTypes as actionTypes } from '../actions/top';
 
-import { AxiosError } from 'axios';
 import { Remocon } from '../interfaces/entities';
 
 /** State */

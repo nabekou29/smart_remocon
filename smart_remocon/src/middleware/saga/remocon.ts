@@ -1,3 +1,4 @@
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as api from '../../api';
 
 import {
@@ -7,7 +8,6 @@ import {
   registerSignal,
   sendSignal,
 } from '../../actions/remocon';
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { Signal } from '../../interfaces/entities';
 

@@ -1,6 +1,5 @@
-import { Remocon, Signal } from '../interfaces/entities';
-
 import { AxiosError } from 'axios';
+import { Remocon, Signal } from '../interfaces/entities';
 
 /** Actionの種類 */
 export enum RemoconActionTypes {

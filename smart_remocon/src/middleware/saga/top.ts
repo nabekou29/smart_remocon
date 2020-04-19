@@ -1,3 +1,4 @@
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as api from '../../api';
 
 import {
@@ -6,7 +7,6 @@ import {
   initialize,
   register,
 } from '../../actions/top';
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { Remocon } from '../../interfaces/entities';
 

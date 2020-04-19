@@ -19,7 +19,7 @@ if (!firebase.apps.length) {
  */
 export const sendSignal = async (
   signalId: string,
-  minutes: number = 0
+  minutes = 0
 ): Promise<any> => {
   const data = {
     signal_id: signalId,
@@ -152,9 +152,7 @@ export const deleteSignal = async (id: string): Promise<void> => {
 };
 
 /** 信号を受け取ります */
-export const receiveSignal = async (
-  timeout: number = 10000
-): Promise<number[]> => {
+export const receiveSignal = async (timeout = 10000): Promise<number[]> => {
   const data = {
     timeout,
     timestamp: firebase.database.ServerValue.TIMESTAMP,

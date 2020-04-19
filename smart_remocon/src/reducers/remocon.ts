@@ -1,10 +1,9 @@
+import { AxiosError } from 'axios';
 import { Remocon, Signal } from '../interfaces/entities';
 import {
   RemoconAction,
   RemoconActionTypes as actionTypes,
 } from '../actions/remocon';
-
-import { AxiosError } from 'axios';
 
 /** State */
 export interface RemoconState {

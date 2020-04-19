@@ -23,6 +23,7 @@ const MenuButton: React.FC = () => {
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <MenuList></MenuList>
       </Drawer>
+      <input />
     </>
   );
 };
